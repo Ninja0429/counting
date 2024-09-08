@@ -6,37 +6,43 @@
     <title>Nicole & Jason Love Countdown</title>
     <style>
         body {
-            background-color: #FFB6C1; /* Pink background */
-            font-family: Arial, sans-serif;
+            background: linear-gradient(135deg, #FFB6C1, #FF69B4); /* Gradient background */
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
             display: flex;
             justify-content: center;
             align-items: center;
             height: 100vh;
             margin: 0;
             text-align: center;
+            color: #fff;
+            position: relative;
+            overflow: hidden;
         }
         .countdown {
-            background-color: white;
-            border-radius: 20px;
+            background-color: rgba(255, 255, 255, 0.9); /* Semi-transparent white background */
+            border-radius: 15px;
             padding: 40px;
-            box-shadow: 0 0 20px rgba(0, 0, 0, 0.2);
+            box-shadow: 0 4px 25px rgba(0, 0, 0, 0.2);
             transition: 0.3s;
+            position: relative;
+            z-index: 10;
         }
         .countdown:hover {
             transform: scale(1.05); /* Hover effect */
         }
         h1 {
-            color: #FF69B4; /* Title color */
-            font-size: 2.5em;
+            color: #FF1493; /* Title color */
+            font-size: 2.8em;
             margin: 0;
         }
         .couple-names {
-            font-size: 1.5em;
-            color: #FF1493; /* Couple names color */
+            font-size: 1.8em;
+            color: #FF69B4; /* Couple names color */
             margin: 10px 0;
+            font-weight: bold;
         }
         .time {
-            font-size: 2em;
+            font-size: 2.5em;
             color: #FF1493; /* Countdown color */
             margin: 20px 0;
         }
@@ -44,44 +50,70 @@
             font-size: 1.2em;
             color: #555; /* Label color */
         }
-        @media (max-width: 600px) {
-            .countdown {
-                padding: 20px;
-            }
-            h1 {
-                font-size: 2em;
-            }
-            .time {
-                font-size: 1.5em;
-            }
+        .heart {
+            width: 25px;
+            height: 25px;
+            background-color: #FF69B4;
+            clip-path: polygon(50% 0%, 100% 50%, 50% 100%, 0% 50%);
+            display: inline-block;
+            margin: 2px;
+        }
+        .total-days {
+            font-size: 1.5em;
+            color: #FF1493; /* Total days color */
+            margin-top: 20px;
+        }
+        /* Background decoration */
+        .decorative-stars {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            background-image: radial-gradient(circle, rgba(255, 255, 255, 0.2) 20%, transparent 20%);
+            background-size: 20px 20px;
+            z-index: 1;
         }
     </style>
 </head>
 <body>
+    <div class="decorative-stars"></div>
     <div class="countdown">
         <h1>Love Countdown</h1>
         <div class="couple-names">Nicole & Jason</div>
         <div class="time" id="countdown"></div>
-        <div class="label">Time elapsed since April 29, 2022:</div>
+        <div class="label">Time since April 29, 2022:</div>
+        <div id="hearts"></div>
+        <div class="total-days" id="totalDays"></div>
     </div>
 
     <script>
-        // Set starting date
+        // Set the start date
         const startDate = new Date("2022-04-29T00:00:00").getTime();
 
-        // Update countdown
+        // Update the countdown
         const countdownFunction = setInterval(() => {
             const now = new Date().getTime();
             const elapsedTime = now - startDate;
 
-            // Calculate days, hours, minutes, seconds
-            const days = Math.floor(elapsedTime / (1000 * 60 * 60 * 24));
+            // Calculate months, days, total days, hours, minutes, seconds
+            const months = Math.floor(elapsedTime / (1000 * 60 * 60 * 24 * 30));
+            const days = Math.floor((elapsedTime % (1000 * 60 * 60 * 24 * 30)) / (1000 * 60 * 60 * 24));
+            const totalDays = Math.floor(elapsedTime / (1000 * 60 * 60 * 24));
             const hours = Math.floor((elapsedTime % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
             const minutes = Math.floor((elapsedTime % (1000 * 60 * 60)) / (1000 * 60));
             const seconds = Math.floor((elapsedTime % (1000 * 60)) / 1000);
 
-            // Display result
-            document.getElementById("countdown").innerHTML = `${days} days ${hours} hours ${minutes} minutes ${seconds} seconds`;
+            // Display the results
+            document.getElementById("countdown").innerHTML = `${months} months ${days} days ${hours} hours ${minutes} minutes ${seconds} seconds`;
+            document.getElementById("totalDays").innerHTML = `Total days: ${totalDays}`;
+
+            // Update heart shapes, used for decoration
+            const heartsContainer = document.getElementById("hearts");
+            heartsContainer.innerHTML = ''; // Clear previous hearts
+            for (let i = 0; i < 20; i++) { // Fixed display of 20 hearts as decoration
+                const heart = document.createElement("div");
+                heart.className = "heart";
+                heartsContainer.appendChild(heart);
+            }
         }, 1000);
     </script>
 </body>
