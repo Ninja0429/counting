@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Nicole & Jason Love Countdown</title>
+    <style>
+        body {
+            background-color: #FFB6C1; /* Pink background */
+            font-family: Arial, sans-serif;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+            text-align: center;
+        }
+        .countdown {
+            background-color: white;
+            border-radius: 20px;
+            padding: 40px;
+            box-shadow: 0 0 20px rgba(0, 0, 0, 0.2);
+            transition: 0.3s;
+        }
+        .countdown:hover {
+            transform: scale(1.05); /* Hover effect */
+        }
+        h1 {
+            color: #FF69B4; /* Title color */
+            font-size: 2.5em;
+            margin: 0;
+        }
+        .couple-names {
+            font-size: 1.5em;
+            color: #FF1493; /* Couple names color */
+            margin: 10px 0;
+        }
+        .time {
+            font-size: 2em;
+            color: #FF1493; /* Countdown color */
+            margin: 20px 0;
+        }
+        .label {
+            font-size: 1.2em;
+            color: #555; /* Label color */
+        }
+        @media (max-width: 600px) {
+            .countdown {
+                padding: 20px;
+            }
+            h1 {
+                font-size: 2em;
+            }
+            .time {
+                font-size: 1.5em;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="countdown">
+        <h1>Love Countdown</h1>
+        <div class="couple-names">Nicole & Jason</div>
+        <div class="time" id="countdown"></div>
+        <div class="label">Time elapsed since April 29, 2022:</div>
+    </div>
+
+    <script>
+        // Set starting date
+        const startDate = new Date("2022-04-29T00:00:00").getTime();
+
+        // Update countdown
+        const countdownFunction = setInterval(() => {
+            const now = new Date().getTime();
+            const elapsedTime = now - startDate;
+
+            // Calculate days, hours, minutes, seconds
+            const days = Math.floor(elapsedTime / (1000 * 60 * 60 * 24));
+            const hours = Math.floor((elapsedTime % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+            const minutes = Math.floor((elapsedTime % (1000 * 60 * 60)) / (1000 * 60));
+            const seconds = Math.floor((elapsedTime % (1000 * 60)) / 1000);
+
+            // Display result
+            document.getElementById("countdown").innerHTML = `${days} days ${hours} hours ${minutes} minutes ${seconds} seconds`;
+        }, 1000);
+    </script>
+</body>
+</html>
